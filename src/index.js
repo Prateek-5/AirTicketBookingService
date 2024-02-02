@@ -4,6 +4,7 @@ const app=express();
 
 const BookingRepository=require('./repository/booking-repo');
 const {PORT} =require('./config/serverConfig');
+const db=require('./models/index');
 
 const setupAndStartServer =() =>{
     app.use(bodyParser.json());

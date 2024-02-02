@@ -1,4 +1,4 @@
-const {StatusCodes, StatusCodes}=require('http-status-codes')
+const {StatusCodes}=require('http-status-codes')
 
 class ServiceError extends Error{
     constructor(

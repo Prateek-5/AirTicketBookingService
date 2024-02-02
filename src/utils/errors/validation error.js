@@ -1,11 +1,12 @@
-const {statusCode, StatusCodes}=require('http-status-codes');
+const {StatusCodes}=require('http-status-codes');
 class ValidationError extends Error{
     constructor( error)
     {
         super();
         let explication=[];
-        error.error.forEach(element => {
-            explication.push(error.message);
+        
+        error.errors.forEach(err => {
+            explication.push(err.message);
         });
         this.name='ValidationError';
         this.message='Not able to validate the data sent in the response',

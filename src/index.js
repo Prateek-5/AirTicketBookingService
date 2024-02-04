@@ -17,7 +17,8 @@ const setupAndStartServer =() =>{
         if(process.env.DB_SYNC) {
             db.sequelize.sync({alter: true});
         }
-
+        console.log("This is a test update");
+        
         // const booking=new BookingRepository();
         // const responce=await booking.create({
         //     id:2,

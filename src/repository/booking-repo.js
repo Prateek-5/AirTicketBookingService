@@ -1,4 +1,4 @@
-const {Booking}=require('./index');
+const {Booking}=require('../models/index');
 const {StatusCodes}=require('http-status-codes')
 
 const {ValidationError,ServiceError, AppError}=require('../utils/errors/index');
@@ -12,7 +12,8 @@ class BookingRepository{
             return booking;
 
         } catch (error) {
-            if(error.name='SequelizeValidationError'){
+            console.log('Something went wrong in the book repos');
+            if(error.name=='SequelizeValidationError'){
                 throw new ValidationError(error);
             }
             
@@ -26,8 +27,11 @@ class BookingRepository{
             }
         }
     }
-
-
-
 }
+    
+
+
+
+
 module.exports=BookingRepository;
+

@@ -2,7 +2,7 @@ const express=require('express');
 const bodyParser=require('body-parser');
 const app=express();
 
-const BookingRepository=require('./repository/booking-repo');
+const {BookingRepository}=require('./repository/index');
 const {PORT,FLIGHT_SERVICE_PATH} =require('./config/serverConfig');
 const db=require('./models/index');
 const apiRoutes=require('./routes/index');
@@ -21,14 +21,9 @@ const setupAndStartServer =() =>{
         //console.log("This is a test update");
         //console.log(FLIGHT_SERVICE_PATH,'this is the flight service path');
         // const booking=new BookingRepository();
-        // const responce=await booking.create({
-        //     id:2,
-        //     flightId:2,
-        //     userId:3,
-        // });
+        // const data={ flightId: '9', userId: '1', noOfSeats: '2', totalCost: 8400 };
+        // const responce=await booking.update(data);
         // console.log(responce);
-
-
 
     })
 }

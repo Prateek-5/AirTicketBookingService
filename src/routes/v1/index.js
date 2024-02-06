@@ -1,6 +1,13 @@
-const express=require('express');
+const express =require('express');
+
+const {BookingController}=require('../../controllers/index');
+
+const bookingcontroller=new BookingController();
+const router = express.Router();
+
+router.post('/bookings',bookingcontroller.create);
 
 
-const router=express.Router();
 
-module.exports=router
+module.exports=router;
+   

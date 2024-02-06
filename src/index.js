@@ -3,13 +3,14 @@ const bodyParser=require('body-parser');
 const app=express();
 
 const BookingRepository=require('./repository/booking-repo');
-const {PORT} =require('./config/serverConfig');
+const {PORT,FLIGHT_SERVICE_PATH} =require('./config/serverConfig');
 const db=require('./models/index');
+const apiRoutes=require('./routes/index');
 
 const setupAndStartServer =() =>{
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
-
+    app.use('/api',apiRoutes)
 
 
     app.listen(PORT, async ()=>{
@@ -17,8 +18,8 @@ const setupAndStartServer =() =>{
         if(process.env.DB_SYNC) {
             db.sequelize.sync({alter: true});
         }
-        console.log("This is a test update");
-        
+        //console.log("This is a test update");
+        //console.log(FLIGHT_SERVICE_PATH,'this is the flight service path');
         // const booking=new BookingRepository();
         // const responce=await booking.create({
         //     id:2,

@@ -17,7 +17,7 @@ class BookingService{
             const flightId=data.flightId;
             //communicate between 2 services
 
-            let getFLightRequestURL=`${FLIGHT_SERVICE_PATH}/api/v1/flight/${flightId}`;
+            const getFLightRequestURL=`${FLIGHT_SERVICE_PATH}/api/v1/flight/${flightId}`;
             console.log(getFLightRequestURL)
             const flight=await axios.get(getFLightRequestURL);
             //console.log(flight.data.data.flight);
@@ -32,11 +32,12 @@ class BookingService{
             const bookingPayload={...data,totalCost};
             console.log(bookingPayload);
             const booking=await this.bookingrepository.create(bookingPayload);
-            
+            const updatedFlightRequestURL=`${FLIGHT_SERVICE_PATH}/api/v1/flight/${booking.flightId}`;
+            console.log(updatedFlightRequestURL);
 
-
-
-            return booking;
+            await axios.patch(updatedFlightRequestURL,{totalSeats: flightData.totalSeats-booking.noOfSeats});
+            const finalBooking = await this.bookingrepository.update(booking.id, {status: "Booked"});
+            return finalBooking;
         } catch (error) {
 
             if(error.name == 'RepositoryError' || 'SequelizeValidationError'){

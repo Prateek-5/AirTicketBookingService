@@ -18,9 +18,9 @@ class BookingService{
             //communicate between 2 services
 
             const getFLightRequestURL=`${FLIGHT_SERVICE_PATH}/api/v1/flight/${flightId}`;
-            console.log(getFLightRequestURL)
+            //console.log(getFLightRequestURL)
             const flight=await axios.get(getFLightRequestURL);
-            //console.log(flight.data.data.flight);
+            console.log(flight.data.data.flight);
 
             let flightData=flight.data.data.flight;
             let priceOfTheFLight=flightData.price;

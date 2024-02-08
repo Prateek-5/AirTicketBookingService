@@ -43,6 +43,7 @@ const publishMessage = async (channel, binding_key, message) => {
 
         await channel.publish(EXCHANGE_NAME, binding_key, Buffer.from(message));
     } catch (error) {
+        console.log(error);
         throw error;
     }
 }

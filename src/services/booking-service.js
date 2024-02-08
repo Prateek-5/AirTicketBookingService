@@ -1,13 +1,18 @@
 const axios =require('axios');
 
 const { BookingRepository} =require('../repository/index');
-const {FLIGHT_SERVICE_PATH}=require('../config/serverConfig');
+const {FLIGHT_SERVICE_PATH,REMINDER_BINDING_KEY}=require('../config/serverConfig');
 const { SericeError } = require('../utils/errors/index');
 const ServiceError = require('../utils/errors/service-error');
+const {publishMessage,createChannel}=require('../utils/messageQueue');
+const { DATE } = require('sequelize');
+const {StatusCodes}=require('http-status-codes')
+
 
 class BookingService{
     constructor(){
         this.bookingrepository=new BookingRepository();
+        
         
     }
     async createBooking(data){
@@ -37,13 +42,28 @@ class BookingService{
 
             await axios.patch(updatedFlightRequestURL,{totalSeats: flightData.totalSeats-booking.noOfSeats});
             const finalBooking = await this.bookingrepository.update(booking.id, {status: "Booked"});
+            const channel=await createChannel();
+           
+            const data1={
+                subject:`Booking confirmed for userId ${finalBooking.id}`,
+                content:`The booking amounts for total ${finalBooking.totalCost}`,
+                recepientEmail:"narayansingh@gamil.com",
+                notificationTime:new Date(),
+                service:"CREATE_TICKET"
+            };
+    
+            publishMessage(channel,REMINDER_BINDING_KEY,JSON.stringify(data1));
+            console.log("Hi this is fromt he senMessagetoQueue service");
+            
+            
+            
             return finalBooking;
         } catch (error) {
 
             if(error.name == 'RepositoryError' || 'SequelizeValidationError'){
                 throw error;
             }
-
+            console.log(error);
 
             throw new SericeError();
             

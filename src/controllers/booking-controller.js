@@ -21,6 +21,8 @@ class BookingController{
         };
 
         publishMessage(channel,REMINDER_BINDING_KEY,JSON.stringify(data));
+        console.log("Hi this is fromt he senMessagetoQueue service");
+
         return res.status(200).json({
             subject:"Ticket 4",
             content:"Content 4",
